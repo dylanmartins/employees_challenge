@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 class EmployeeApi(APIView):
     """
-    List all employees, delete a employee or create a new employee.
+    List all employees, get a employee, delete a employee or create a new employee.
     """
     def get_object(self, pk):
         try:
@@ -21,10 +21,15 @@ class EmployeeApi(APIView):
         except Employee.DoesNotExist:
             raise Http404
 
-    def get(self, request):
-        employees = Employee.objects.all()
-        serializer = EmployeeSerialiser(employees, many=True)
-        data = normalize_employees(serializer.data)
+    def get(self, request, pk=None):
+        if pk:
+            employee = self.get_object(pk)
+            serializer = EmployeeSerialiser(employee)
+            data = serializer.data
+        else:
+            employees = Employee.objects.all()
+            serializer = EmployeeSerialiser(employees, many=True)
+            data = normalize_employees(serializer.data)
         return HttpResponse(
             json.dumps(data),
             content_type="application/json")
@@ -39,5 +44,5 @@ class EmployeeApi(APIView):
     @csrf_exempt
     def delete(self, request, pk):
         employee = self.get_object(pk)
-        employees.delete()
+        employee.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

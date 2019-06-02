@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 # Create your views here.
@@ -59,9 +59,20 @@ def index(request):
 
 
 def create_employee(request):
-    form = CreateEmployeeForm()
     html_data = {
-        'title': 'Register employee page',
-        'form': form
+        'title': 'Create employee page',
     }
-    return render(request, 'create_employee.html', html_data)
+    if request.method == 'GET':
+        form = CreateEmployeeForm()
+        html_data['form'] = form
+        return render(request, 'create_employee.html', html_data)
+    
+    form = CreateEmployeeForm(request.POST)
+    if form.is_valid():
+        employee = Employee(
+            name=form.cleaned_data['name'],
+            email=form.cleaned_data['email'],
+            department=form.cleaned_data['department']
+        )
+        employee.save()
+    return redirect('home')

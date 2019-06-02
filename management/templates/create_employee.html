@@ -1,6 +1,41 @@
 {% load widget_tweaks %}
 <html>
     <head>
+        <style>
+            .myButton {
+                background-color:#000000;
+                display:inline-block;
+                cursor:pointer;
+                color:#ffffff;
+                font-family:Arial;
+                font-size:17px;
+                padding:16px 31px;
+                text-decoration:none;
+                text-shadow:0px 0px 0px #000000;
+            }
+            .myButton:hover {
+                background-color:#bfc4bc;
+            }
+            .myButton:active {
+                position:relative;
+                top:1px;
+            }
+            .css-label {
+                font-family: Georgia, serif;
+                font-size: 17px;
+                letter-spacing: 0.4px;
+                word-spacing: 1.6px;
+                color: #000000;
+                font-weight: 700;
+                text-decoration: none solid rgb(68, 68, 68);
+                font-style: normal;
+                font-variant: normal;
+                text-transform: none;
+            }
+            .css-form {
+                padding-bottom: 5px;
+            }
+        </style>
     </head>
     <body>
         <div>
@@ -8,8 +43,8 @@
             <form action="" method="post">
                 {% csrf_token %}
                 {% for field in form %}
-                <div>
-                    <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                <div class="css-form">
+                    <label for="{{ field.auto_id }}" class="css-label">{{ field.label }}:</label>
                     <div>
                     {% render_field field %}
                     {% for error in field.errors %}
@@ -21,7 +56,7 @@
                 <div>
                     <div>
                     <br />
-                    <button type="submit">Register</button>
+                    <button type="submit" class="myButton">Save</button>
                     </div>
                 </div>
             </form>

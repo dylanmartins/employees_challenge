@@ -49,7 +49,6 @@ class EmployeeApi(APIView):
         employee.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
 def index(request):
     html_data = {
         'employees': Employee.objects.all()
@@ -86,4 +85,4 @@ def delete_employee(request, pk):
         employee.delete()
         return redirect('home')
     except Employee.DoesNotExist as e:
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        raise Http404

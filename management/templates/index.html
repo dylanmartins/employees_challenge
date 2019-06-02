@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <h1>{{title}}</h1>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 5px;
+            }
+            th {
+                text-align: left;
+            }
+            table#employees tr:nth-child(even) {
+                background-color: #eee;
+            }
+            table#employees tr:nth-child(odd) {
+                background-color: #fff;
+            }
+            table#employees th {
+                background-color: black;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <table id="employees" style="width:100%">
+            <tr>
+                <th>Name</th>
+                <th>Email</th> 
+                <th>Department</th>
+                <th>Actions</th>
+            </tr>
+            {% for employee in employees %}
+            <tr>
+                <td>{{employee.name}}</td>
+                <td>{{employee.email}}</td> 
+                <td>{{employee.department}}</td>
+                <td>94</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>

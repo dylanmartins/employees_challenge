@@ -1,0 +1,30 @@
+{% load widget_tweaks %}
+<html>
+    <head>
+    </head>
+    <body>
+        <div>
+            <h1>{{title}}</h1>
+            <form action="" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                <div>
+                    <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                    <div>
+                    {% render_field field %}
+                    {% for error in field.errors %}
+                    <span style="color:red;">{{ error }}</span>
+                    {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+                <div>
+                    <div>
+                    <br />
+                    <button type="submit">Register</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

@@ -18,6 +18,8 @@ from django.contrib import admin
 from management import views
 
 urlpatterns = [
-    url(r'^', views.index, name='home'),
+    url(r'^', include('management.urls')),
+    url(r'^index/', views.index, name='home'),
+    url(r'^create/', views.create_employee, name='employee-create'),
     url(r'^admin/', admin.site.urls),
 ]

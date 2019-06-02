@@ -4,6 +4,7 @@ from django.http import Http404, HttpResponse
 from .models import Employee
 from .serializers import EmployeeSerialiser
 from .helpers import normalize_objects
+from .forms import CreateEmployeeForm
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -51,6 +52,16 @@ class EmployeeApi(APIView):
 
 def index(request):
     html_data = {
-        'title': 'Employees page'
+        'title': 'Employees page',
+        'employees': Employee.objects.all()
     }
     return render(request, 'index.html', html_data)
+
+
+def create_employee(request):
+    form = CreateEmployeeForm()
+    html_data = {
+        'title': 'Register employee page',
+        'form': form
+    }
+    return render(request, 'create_employee.html', html_data)

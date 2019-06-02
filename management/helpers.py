@@ -1,8 +1,11 @@
-def normalize_employees(employees):
-    normalized_employees = []
-    for employee in employees:
+def normalize_objects(objects):
+    """
+    This method receives a list of objects and return a list of dictionaries
+    """
+    normalized_objects = []
+    for obj in objects:
         data = {}
-        for field in employee:
-            data[field] = employee[field]
-        normalized_employees.append(data)
-    return normalized_employees
+        for field in obj:
+            data[field] = obj[field]
+        normalized_objects.append(data)
+    return normalized_objects

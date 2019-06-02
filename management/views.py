@@ -3,7 +3,7 @@ import json
 from django.http import Http404, HttpResponse
 from .models import Employee
 from .serializers import EmployeeSerialiser
-from .helpers import normalize_employees
+from .helpers import normalize_objects
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -29,7 +29,7 @@ class EmployeeApi(APIView):
         else:
             employees = Employee.objects.all()
             serializer = EmployeeSerialiser(employees, many=True)
-            data = normalize_employees(serializer.data)
+            data = normalize_objects(serializer.data)
         return HttpResponse(
             json.dumps(data),
             content_type="application/json")

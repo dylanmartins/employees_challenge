@@ -18,9 +18,9 @@ from django.contrib import admin
 from management import views
 
 urlpatterns = [
-    url(r'^', include('management.urls')),
-    url(r'^index/', views.index, name='home'),
+    url(r'employee/', include('management.urls')),
     url(r'^create/', views.create_employee, name='employee-create'),
     url(r'^delete/(?P<pk>[0-9]+)/', views.delete_employee, name='employee-delete'),
     url(r'^admin/', admin.site.urls),
+    url(r'^', views.index, name='home'),
 ]

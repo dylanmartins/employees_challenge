@@ -52,7 +52,6 @@ class EmployeeApi(APIView):
 
 def index(request):
     html_data = {
-        'title': 'Employees page',
         'employees': Employee.objects.all()
     }
     return render(request, 'index.html', html_data)
@@ -60,7 +59,6 @@ def index(request):
 
 def create_employee(request):
     html_data = {
-        'title': 'Create employee page',
     }
     if request.method == 'GET':
         form = CreateEmployeeForm()
@@ -76,3 +74,16 @@ def create_employee(request):
         )
         employee.save()
     return redirect('home')
+
+
+def delete_employee(request, pk):
+    html_data = {}
+    if not pk:
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    try:
+        employee = Employee.objects.get(pk=pk)
+        employee.delete()
+        return redirect('home')
+    except Employee.DoesNotExist as e:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

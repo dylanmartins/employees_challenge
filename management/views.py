@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render
 
 
 # Create your views here.
@@ -46,3 +47,10 @@ class EmployeeApi(APIView):
         employee = self.get_object(pk)
         employee.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+def index(request):
+    html_data = {
+        'title': 'Employees page'
+    }
+    return render(request, 'index.html', html_data)

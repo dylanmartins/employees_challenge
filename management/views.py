@@ -74,12 +74,14 @@ def create_employee(request):
     
     form = CreateEmployeeForm(request.POST)
     if form.is_valid():
-        employee = Employee(
-            name=form.cleaned_data['name'],
-            email=form.cleaned_data['email'],
-            department=form.cleaned_data['department']
-        )
-        employee.save()
+        employee = Employee.objects.filter(email=form.cleaned_data['email'])
+        if not employee:
+            employee = Employee(
+                name=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                department=form.cleaned_data['department']
+            )
+            employee.save()
     return redirect('home')
 
 

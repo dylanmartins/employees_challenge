@@ -37,17 +37,21 @@ class EmployeeApi(APIView):
             content_type="application/json")
 
     def post(self, request):
-        serializer = EmployeeSerialiser(data=request.data)
-        if serializer.is_valid():
-            email = serializer.validated_data.get('email')
-            if validate_email(email):
-                employee = Employee.objects.filter(email=email).all()
-                if not employee:
-                    serializer.save()
-                    return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    @csrf_exempt
+        employees = request.data
+        data = {'success': []}
+        for obj in employees:
+            serializer = EmployeeSerialiser(data=obj)
+            if serializer.is_valid():
+                email = serializer.validated_data.get('email')
+                if validate_email(email):
+                    employee = Employee.objects.filter(email=email).all()
+                    if not employee:
+                        serializer.save()
+                        data['success'].append(email)
+        return HttpResponse(
+            json.dumps(data),
+            content_type="application/json")
+
     def delete(self, request, pk):
         employee = self.get_object(pk)
         employee.delete()

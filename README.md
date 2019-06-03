@@ -45,10 +45,10 @@ Na área de administração do sistema você também consegue listar, criar, del
 Este painel possui também uma API em que você pode Listar, Adicionar e Remover funcionários.
 
 Você pode listar pela URL http://localhost:8000/employee/ com um método GET, ou caso queira listar um funcionário especifico você também pode enviar o ID do banco por exemplo http://localhost:8000/employee/1/ eu estaria buscando o funcionário do ID 1.
-    
-Você pode adicionar funcionários com um método POST na URL http://localhost:8000/employee/ enviando um json junto com a requisição.
+
+Você pode adicionar funcionários com um método POST na URL http://localhost:8000/employee/ enviando uma lista de jsons junto com a requisição.
 Exemplo:
-> curl -d '{"name":"dylan", "email":"dylan@dylan.com", "department":"department"}' -H "Content-Type: application/json" -X POST http://localhost:8000/employee/
+> curl -d '[{"name":"dylan", "email":"dylan@dylan.com", "department":"department"}]' -H "Content-Type: application/json" -X POST http://localhost:8000/employee/
 
 E se você enviar uma request como método DELETE e um ID de funcionário, você irá deletar este funcionário.
 Exemplo:

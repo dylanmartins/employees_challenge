@@ -3,7 +3,7 @@ import json
 from django.http import Http404, HttpResponse
 from .models import Employee
 from .serializers import EmployeeSerialiser
-from .helpers import normalize_objects
+from .helpers import normalize_objects, validate_email
 from .forms import CreateEmployeeForm
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -39,8 +39,12 @@ class EmployeeApi(APIView):
     def post(self, request):
         serializer = EmployeeSerialiser(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            email = serializer.validated_data.get('email')
+            if validate_email(email):
+                employee = Employee.objects.filter(email=email).all()
+                if not employee:
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     @csrf_exempt

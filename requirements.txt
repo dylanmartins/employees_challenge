@@ -1,4 +1,4 @@
-Django==1.11.20
+Django==1.11.29
 psycopg2>=2.7,<3.0
 djangorestframework==3.6.3
 django-widget-tweaks==1.4.3
